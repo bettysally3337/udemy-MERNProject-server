@@ -10,6 +10,7 @@ router.use((req, res, next) => {
 //獲得系統中的所有課程
 router.get("/", async (req, res) => {
   try {
+    console.log("從server獲得系統所有課程");
     let courseFound = await Course.find({})
       .populate("instructor", ["username", "email"])
       .exec();
@@ -22,6 +23,7 @@ router.get("/", async (req, res) => {
 //用講師id來尋找課程
 router.get("/instructor/:_instructor_id", async (req, res) => {
   let { _instructor_id } = req.params;
+  console.log("從server獲得用講師id來尋找課程");
   let coursesFound = await Course.find({ instructor: _instructor_id })
     .populate("instructor", ["username", "email"])
     .exec();
@@ -31,6 +33,7 @@ router.get("/instructor/:_instructor_id", async (req, res) => {
 //用學生id來尋找註冊過的課程
 router.get("/student/:_student_id", async (req, res) => {
   let { _student_id } = req.params;
+  console.log("從server獲得用學生id來尋找註冊過的課程");
   let coursesFound = await Course.find({ students: _student_id })
     .populate("instructor", ["username", "email"])
     .exec();
@@ -40,6 +43,7 @@ router.get("/student/:_student_id", async (req, res) => {
 //用課程名稱尋找課程
 router.get("/findByName/:name", async (req, res) => {
   let { name } = req.params;
+  console.log("從server獲得用課程名稱尋找課程");
   try {
     let courseFound = await Course.find({ title: name })
       .populate("instructor", ["email", "username"])
@@ -53,6 +57,7 @@ router.get("/findByName/:name", async (req, res) => {
 //用課程id尋找課程
 router.get("/:_id", async (req, res) => {
   let { _id } = req.params;
+  console.log("從server獲得用課程id尋找課程");
   try {
     let courseFound = await Course.findOne({ _id })
       .populate("instructor", ["email"])
@@ -67,6 +72,7 @@ router.get("/:_id", async (req, res) => {
 router.post("/", async (req, res) => {
   //驗證數據符合規範
   let { error } = courseValidation(req.body);
+  console.log("在server新增課程");
   if (error) return res.status(400).send(error.details[0].message);
 
   if (req.user.isStudent()) {
@@ -91,6 +97,7 @@ router.post("/", async (req, res) => {
 
 //讓學生透過id來註冊新課程
 router.post("/enroll/:_id", async (req, res) => {
+  console.log("在server讓學生透過id來註冊新課程");
   let { _id } = req.params;
   try {
     let course = await Course.findOne({ _id }).exec();

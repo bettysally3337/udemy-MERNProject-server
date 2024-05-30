@@ -25,9 +25,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+console.log("進入authRoute之前");
 app.use("/api/user", authRoute);
 //courseRoute應該被jwt保護
 //如果request header內部沒有jwt，則request就會被視為unauthorized
+
+console.log("進入courseRoute之前");
 app.use(
   "/api/courses",
   passport.authenticate("jwt", { session: false }),

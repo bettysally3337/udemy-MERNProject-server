@@ -15,6 +15,7 @@ router.get("/testAPI", (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
+  console.log("server->註冊會員");
   //確認數據是否符合規範
   let { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -38,6 +39,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  console.log("server->登入會員");
   let { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
