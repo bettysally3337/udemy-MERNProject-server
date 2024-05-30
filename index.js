@@ -8,6 +8,7 @@ const courseRoute = require("./routes").course;
 const passport = require("passport");
 require("./config/passport")(passport);
 const cors = require("cors");
+const port = process.env.PORT || 8080;
 
 //連結mongoDB
 mongoose
@@ -37,6 +38,6 @@ app.use(
 //jwt
 
 //因為react預設是3000，這裡錯開
-app.listen(8080, () => {
+app.listen(port, () => {
   console.log("後端伺服器在port 8080...");
 });
